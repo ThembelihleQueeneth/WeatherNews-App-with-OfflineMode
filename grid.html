@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid</title>
+    <style>
+        .container{
+            display: inline-grid;
+            grid-template-columns: auto auto auto auto auto;
+        }
+    </style>
+</head>
+<body>
+   
+  <p id="demo"></p>
+
+  <script>
+
+    function getCurrentDate(){
+    const d = new Date();
+    const months = ["Jan","Feb","Mar","Apr","May","June","July","Aug","Sep","Oct", "Nov","Dec"];
+    const days = ["Mon", "Tue", "Wed","Thu", "Fri", "Sat", "Sun"];
+    let day = days[d.getDay()-1];
+    let month = months[d.getMonth()];
+    document.getElementById("demo").innerHTML = day + " "+d.getDate() + "/"+month + "/"+d.getFullYear();
+    }
+    getCurrentDate();
+  </script>
+</body>
+</html>

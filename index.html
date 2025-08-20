@@ -157,35 +157,38 @@
     }
 
     .weekly-forecast {
-      display: flex;
-      flex-direction: column;
+     
       align-items: center;
     }
 
-    .weekly-forecast > div {
+    /* .weekly-forecast > div {
       display: flex;
       gap: 18px;
       justify-content: center;
-      flex-wrap: wrap;
       margin-top: 15px;
-    }
+    } */
 
     .forecast-card {
       background: rgba(255,255,255,0.13);
       border-radius: 12px;
       padding: 16px 20px;
       text-align: center;
-      min-width: 110px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
-      display: flex;
-      flex-direction: row;
+      display: inline-grid;
+      grid-template-columns: auto auto auto;
       align-items: center;
       gap: 7px;
+      width: 50%;
+      margin-left: 250px;
+    }
+    .forecast-card > div {
+      border: 1px solid #000;
+      border-radius: 20px;
+      padding: 10px;
     }
 
     .forecast-card img {
-      width: 40px;
-      height: 40px;
+      width: 100px;
+      height: 100px;
       object-fit: contain;
       margin-bottom: 5px;
     }
@@ -194,6 +197,32 @@
       margin: 0;
       font-size: 1rem;
       font-weight: 500;
+    }
+    #hourly-forecast{
+      margin-top: 50;
+      overflow-x: auto;
+      white-space: nowrap;
+      display: flex;
+      justify-content: space-between;
+    }
+    .hourly-item{
+      flex: 0 0 auto;
+      width: 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-right: 10px;
+    }
+    .hourly-item img{
+      width: 30px;
+      height: 30px;
+      margin-bottom: 5px;
+
+    }
+    #hourly-heading{
+      margin-top: 10px;
+
+
     }
   </style>
 </head>
@@ -207,8 +236,8 @@
       <h1>Weather App</h1>
     </div>
     <div class="search">
-      <input type="text" placeholder="Enter city name" spellcheck="false">
-      <button>
+      <input type="text" placeholder="Enter city name" spellcheck="false" required/>
+      <button >
         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000">
           <path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 
           75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 
@@ -227,7 +256,7 @@
       <img src="assets/sun_clouds.png" alt="" class="weather-icon">
       <h1 class="temp">22°C</h1>
       <h2 class="city">Polokwane</h2>
-      <h3>Wed, 20 August</h3>
+      <h3 id = "currentDate"></h3>
       <div class="details">
         <div class="col">
           <img src="assets/droplet.svg" alt="">
@@ -240,37 +269,55 @@
           <p>Wind</p>
         </div>
       </div>
+      <div id="hourly-forecast">
+
+      </div>
+      <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis nostrum totam sunt aliquid impedit sequi optio dicta quisquam, expedita consequuntur debitis veritatis eveniet dolorem. Ea in nam quae nesciunt neque.</p>
     </div>
+
   </div>
 
-   <!-- Display weekly weather forecast -->
+   <!-- Display weekly weather forecast and more details -->
     <div class="weekly-forecast">
         <h2>Weekly Forecast</h2>
         <div class="forecast-card">
-        <p class="day">Mon</p>
-        <img src="assets/sun_clouds.png" alt="">
-        <p>25°C</p>
-        </div>
-        <div class="forecast-card">
-        <p>Tue</p>
-        <img src="assets/clouds.jpg" alt="">
-        <p>22°C</p>
-        </div>
-        <div class="forecast-card">
-        <p>Wed</p>
-        <img src="assets/sun_clouds.png" alt="">
-        <p>25°C</p>
-        </div>
-        <div class="forecast-card">
-        <p>Thu</p>
-        <img src="assets/sun_clouds.png" alt="">
-        <p>25°C</p>
-        </div>
-        <div class="forecast-card">
-        <p>Fri</p>
-        <img src="assets/sun_clouds.png" alt="">
-        <p>25°C</p>
-        </div>
+          <div>
+            <p class="day">Mon</p>
+            <img src="assets/sun_clouds.png" alt="">
+            <p>25°C</p>
+          </div>
+          <div>
+            <p>Tue</p>
+            <img src="assets/clouds.jpg" alt="">
+            <p>22°C</p>
+          </div>
+          <div>
+            <p>Wed</p>
+            <img src="assets/clouds.jpg" alt="">
+            <p>22°C</p>
+          </div>
+          <div>
+            <p>Thu</p>
+            <img src="assets/clouds.jpg" alt="">
+            <p>22°C</p>
+          </div>
+          <div>
+            <p>Fri</p>
+            <img src="assets/clouds.jpg" alt="">
+            <p>22°C</p>
+          </div>
+          <div>
+            <p>Sat</p>
+            <img src="assets/clouds.jpg" alt="">
+            <p>22°C</p>
+          </div>
+          <div>
+            <p>Sun</p>
+            <img src="assets/clouds.jpg" alt="">
+            <p>22°C</p>
+          </div>
+         </div>
+       
 
     </div>
         
@@ -285,6 +332,31 @@
         const searchBox = document.querySelector(".search input");
         const searchBtn = document.querySelector(".search button");
         const weatherIcon = document.querySelector(".weather-icon");
+        
+
+        function displayHourlyForecast(hourlyData) {
+          const next24Hours = hourlyData.slice(0, 8);
+          const hourlyForecastDiv = document.getElementById('hourly-forecast');
+
+          next24Hours.forEach (item => {
+            const dateTime = new Data(item.dt *1000);
+            const hour = dateTime.getHour();
+            const temp = Math.round(data.main.temp) + "°C";
+            const iconCode = item.weather[0].icon;
+            const iconUrl = ``;
+
+            const hourlyItemHtml = `
+                    <div class = " ">
+                      <span>${hour}:00</span>
+                      <img src = "${iconUrl}" alt="Hourly Weather Icon">
+                      <span>${temp}</span>
+                      </div>
+            `;
+            hourlyForecastDiv.innerHTML +=hourlyItemHtml;
+
+
+          })
+        }
 
         async function checkWeather(city) {
             const response = await fetch(apiURL + city + `&appid=${apiKey}`);
@@ -302,7 +374,7 @@
             document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°C";
             document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
             document.querySelector(".wind").innerHTML = data.wind.speed + " km/h";
-            document.querySelector(".day").innerHTML = data.daily;
+            
 
             if(data.weather[0].main == "Clouds") {
                 weatherIcon.src = "assets/clouds.jpg";
@@ -324,6 +396,17 @@
         searchBtn.addEventListener("click", () =>{
             checkWeather(searchBox.value);
         })
+
+         function getCurrentDate(){
+    const d = new Date();
+    const months = ["Jan","Feb","Mar","Apr","May","June","July","Aug","Sep","Oct", "Nov","Dec"];
+    const days = ["Mon", "Tue", "Wed","Thu", "Fri", "Sat", "Sun"];
+    let day = days[d.getDay()-1];
+    let month = months[d.getMonth()];
+    let time = d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+    document.getElementById("currentDate").innerHTML = day + " "+d.getDate() + "/"+month + "/"+d.getFullYear()+" "+time;
+    }
+    getCurrentDate();
 
          checkWeather();
     </script>
