@@ -1,49 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather App</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=search" />
-    
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather App</title>
+
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color:  #4a90e2;
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(5px);
+      position: sticky;
+      top: 0;
+    }
+
+    .logo img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+    }
+
+    .title h1 {
+      margin: 0;
+      font-size: 1.8rem;
+      font-weight: 600;
+    }
+
+    .search {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .search input {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 25px;
+      outline: none;
+      font-size: 1rem;
+      width: 220px;
+    }
+
+    .search button {
+      background: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .search button:hover {
+      background: #ffd700;
+      transform: scale(1.1);
+    }
+
+    .error {
+      display: none;
+      text-align: center;
+      margin: 20px 0;
+      color: #ff4d4d;
+      font-weight: 600;
+    }
+
+    .card {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 30px;
+    }
+
+   
+    .weather {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 20px;
+      text-align: center;
+     
+    }
+
+
+
+    .weather img.weather-icon {
+      width: 80px;
+      margin: 10px 0;
+    }
+
+    .temp {
+      font-size: 2.5rem;
+      margin: 5px 0;
+      font-weight: bold;
+    }
+
+    .city {
+      font-size: 1.3rem;
+      margin: 0;
+      font-weight: 500;
+    }
+
+    .weather h3 {
+      font-size: 1rem;
+      color: #ddd;
+      margin: 10px 0 20px;
+    }
+
+    .details {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 10px;
+    }
+
+    .col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 0.9rem;
+    }
+
+    .col img {
+      width: 30px;
+      margin-bottom: 5px;
+    }
+  </style>
 </head>
 <body>
 
-    <div class="card">
-        <div class="search">
-            <input type="text" placeholder="Enter city name" spellcheck="false">
-            <button><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg>Search</button>
-        </div>
-        <div class="error">
-            <p>Invalid city name</p>
-        </div>
-        <div class="weather">
-            <img src="assets/sun_clouds.png" alt="" class="weather-icon">
-            <h1 class="temp">22°C</h1>
-            <h2 class="city">Polokwane</h2>
-            <div class="details">
-                <div class="col">
-                    <img src="/assets/droplet.svg" alt=""  >
-                    <div>
-                        <p class="humidity">50%</p>
-                        <p>Humidity</p>
-                    </div>
-                
-                </div>
-                <div class="col">
-                    <img src="/assets/wind.svg" alt="" >
-                    <div>
-                        <p class="wind">15 km/h</p>
-                        <p>Wind Speed</p>
-                    </div>
-                
-                </div>
-            </div>
-        </div>
+  <nav>
+    <div class="logo">
+      <img src="assets/logo.jpg" alt="Logo">
     </div>
+    <div class="title">
+      <h1>Weather App</h1>
+    </div>
+    <div class="search">
+      <input type="text" placeholder="Enter city name" spellcheck="false">
+      <button>
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000">
+          <path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 
+          75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 
+          252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 
+          0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
 
-    <script>
+
+  <div class="error">Invalid City name</div>
+
+  <div class="card">
+    <div class="weather">
+      <img src="assets/sun_clouds.png" alt="" class="weather-icon">
+      <h1 class="temp">22°C</h1>
+      <h2 class="city">Polokwane</h2>
+      <h3>Wed, 20 August</h3>
+      <div class="details">
+        <div class="col">
+          <img src="assets/droplet.svg" alt="">
+          <p class="humidity">50%</p>
+          <p>Humidity</p>
+        </div>
+        <div class="col">
+          <img src="assets/wind.svg" alt="">
+          <p class="wind">15 km/h</p>
+          <p>Wind</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+ 
+
+   <script>
         const apiKey = "77a60f51032479c8f4f5798b0d55b95b";
         const apiURL = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
         const searchBox = document.querySelector(".search input");
@@ -89,6 +233,6 @@
 
          checkWeather();
     </script>
-    
+
 </body>
 </html>
