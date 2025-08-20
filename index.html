@@ -137,6 +137,64 @@
       width: 30px;
       margin-bottom: 5px;
     }
+
+    .weekly-forecast {
+      margin: 30px auto;
+      max-width: 900px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 15px;
+      padding: 20px 30px;
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .weekly-forecast h2 {
+      margin-top: 0;
+      font-size: 1.4rem;
+      font-weight: 600;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+
+    .weekly-forecast {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .weekly-forecast > div {
+      display: flex;
+      gap: 18px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 15px;
+    }
+
+    .forecast-card {
+      background: rgba(255,255,255,0.13);
+      border-radius: 12px;
+      padding: 16px 20px;
+      text-align: center;
+      min-width: 110px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .forecast-card img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      margin-bottom: 5px;
+    }
+
+    .forecast-card p {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 500;
+    }
   </style>
 </head>
 <body>
@@ -185,9 +243,43 @@
     </div>
   </div>
 
+   <!-- Display weekly weather forecast -->
+    <div class="weekly-forecast">
+        <h2>Weekly Forecast</h2>
+        <div class="forecast-card">
+        <p class="day">Mon</p>
+        <img src="assets/sun_clouds.png" alt="">
+        <p>25°C</p>
+        </div>
+        <div class="forecast-card">
+        <p>Tue</p>
+        <img src="assets/clouds.jpg" alt="">
+        <p>22°C</p>
+        </div>
+        <div class="forecast-card">
+        <p>Wed</p>
+        <img src="assets/sun_clouds.png" alt="">
+        <p>25°C</p>
+        </div>
+        <div class="forecast-card">
+        <p>Thu</p>
+        <img src="assets/sun_clouds.png" alt="">
+        <p>25°C</p>
+        </div>
+        <div class="forecast-card">
+        <p>Fri</p>
+        <img src="assets/sun_clouds.png" alt="">
+        <p>25°C</p>
+        </div>
+
+    </div>
+        
+
+
  
 
    <script>
+    
         const apiKey = "77a60f51032479c8f4f5798b0d55b95b";
         const apiURL = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
         const searchBox = document.querySelector(".search input");
@@ -210,6 +302,7 @@
             document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°C";
             document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
             document.querySelector(".wind").innerHTML = data.wind.speed + " km/h";
+            document.querySelector(".day").innerHTML = data.daily;
 
             if(data.weather[0].main == "Clouds") {
                 weatherIcon.src = "assets/clouds.jpg";
@@ -225,6 +318,7 @@
             document.querySelector(".weather").style.display = "block";
             document.querySelector(".error").style.display = "none";
         }
+        console.log(data);
     }
 
         searchBtn.addEventListener("click", () =>{
