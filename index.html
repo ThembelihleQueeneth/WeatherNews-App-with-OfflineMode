@@ -4,14 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Weather App</title>
-
   <style>
     body {
       font-family: "Segoe UI", Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color:  #4a90e2;
-      color: #fff;
+      background: linear-gradient(to bottom, #ffd700, #ffa500);
+      color: #333;
       min-height: 100vh;
     }
 
@@ -20,10 +19,11 @@
       justify-content: space-between;
       align-items: center;
       padding: 15px 30px;
-      background: rgba(0, 0, 0, 0.3);
-      backdrop-filter: blur(5px);
+      background: rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(6px);
       position: sticky;
       top: 0;
+      border-bottom: 2px solid #ffb300;
     }
 
     .logo img {
@@ -35,7 +35,9 @@
     .title h1 {
       margin: 0;
       font-size: 1.8rem;
-      font-weight: 600;
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
     }
 
     .search {
@@ -67,7 +69,7 @@
     }
 
     .search button:hover {
-      background: #ffd700;
+      background: #ffb300;
       transform: scale(1.1);
     }
 
@@ -75,27 +77,26 @@
       display: none;
       text-align: center;
       margin: 20px 0;
-      color: #ff4d4d;
+      color: #b00020;
       font-weight: 600;
     }
 
     .card {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
+      display: flex;
+      justify-content: center;
       padding: 30px;
     }
 
-   
     .weather {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.85);
       border-radius: 15px;
-      padding: 20px;
+      padding: 25px;
       text-align: center;
-     
+      color: #333;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      max-width: 400px;
+      width: 100%;
     }
-
-
 
     .weather img.weather-icon {
       width: 80px;
@@ -106,17 +107,18 @@
       font-size: 2.5rem;
       margin: 5px 0;
       font-weight: bold;
+      color: #e65100;
     }
 
     .city {
       font-size: 1.3rem;
       margin: 0;
-      font-weight: 500;
+      font-weight: 600;
     }
 
     .weather h3 {
       font-size: 1rem;
-      color: #ddd;
+      color: #555;
       margin: 10px 0 20px;
     }
 
@@ -138,57 +140,72 @@
       margin-bottom: 5px;
     }
 
+    #hourly-heading {
+      margin-top: 20px;
+      font-weight: 600;
+    }
+
+    #hourly-forecast {
+      margin-top: 15px;
+      overflow-x: auto;
+      white-space: nowrap;
+      display: flex;
+      gap: 10px;
+      padding: 10px 0;
+    }
+
+    .hourly-item {
+      flex: 0 0 auto;
+      background: #fff3cd;
+      border-radius: 12px;
+      padding: 10px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .hourly-item img {
+      width: 30px;
+      height: 30px;
+      margin-bottom: 5px;
+    }
+
     .weekly-forecast {
       margin: 30px auto;
       max-width: 900px;
-      background: rgba(255,255,255,0.08);
+      background: rgba(255, 255, 255, 0.85);
       border-radius: 15px;
       padding: 20px 30px;
-      color: #fff;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      color: #333;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     }
 
     .weekly-forecast h2 {
       margin-top: 0;
       font-size: 1.4rem;
-      font-weight: 600;
+      font-weight: 700;
       text-align: center;
       letter-spacing: 1px;
+      color: #e65100;
     }
-
-    .weekly-forecast {
-     
-      align-items: center;
-    }
-
-    /* .weekly-forecast > div {
-      display: flex;
-      gap: 18px;
-      justify-content: center;
-      margin-top: 15px;
-    } */
 
     .forecast-card {
-      background: rgba(255,255,255,0.13);
-      border-radius: 12px;
-      padding: 16px 20px;
-      text-align: center;
-      display: inline-grid;
-      grid-template-columns: auto auto auto;
-      align-items: center;
-      gap: 7px;
-      width: 50%;
-      margin-left: 250px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
     }
+
     .forecast-card > div {
-      border: 1px solid #000;
-      border-radius: 20px;
-      padding: 10px;
+      background: #fff8e1;
+      border-radius: 12px;
+      padding: 12px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
 
     .forecast-card img {
-      width: 100px;
-      height: 100px;
+      width: 50px;
+      height: 50px;
       object-fit: contain;
       margin-bottom: 5px;
     }
@@ -197,32 +214,6 @@
       margin: 0;
       font-size: 1rem;
       font-weight: 500;
-    }
-    #hourly-forecast{
-      margin-top: 50;
-      overflow-x: auto;
-      white-space: nowrap;
-      display: flex;
-      justify-content: space-between;
-    }
-    .hourly-item{
-      flex: 0 0 auto;
-      width: 80px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-right: 10px;
-    }
-    .hourly-item img{
-      width: 30px;
-      height: 30px;
-      margin-bottom: 5px;
-
-    }
-    #hourly-heading{
-      margin-top: 10px;
-
-
     }
   </style>
 </head>
@@ -237,17 +228,17 @@
     </div>
     <div class="search">
       <input type="text" placeholder="Enter city name" spellcheck="false" required/>
-      <button >
+      <button>
         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000">
-          <path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 
-          75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 
-          252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 
-          0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/>
+          <path d="M784-120 532-372q-30 24-69 38t-83 14q-109 
+            0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 
+            184.5 75.5T640-580q0 44-14 83t-38 69l252 
+            252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 
+            0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/>
         </svg>
       </button>
     </div>
   </nav>
-
 
   <div class="error">Invalid City name</div>
 
@@ -256,7 +247,8 @@
       <img src="assets/sun_clouds.png" alt="" class="weather-icon">
       <h1 class="temp">22°C</h1>
       <h2 class="city">Polokwane</h2>
-      <h3 id = "currentDate"></h3>
+      <h3 id="currentDate"></h3>
+
       <div class="details">
         <div class="col">
           <img src="assets/droplet.svg" alt="">
@@ -269,147 +261,132 @@
           <p>Wind</p>
         </div>
       </div>
-      <div id="hourly-forecast">
 
-      </div>
-      <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis nostrum totam sunt aliquid impedit sequi optio dicta quisquam, expedita consequuntur debitis veritatis eveniet dolorem. Ea in nam quae nesciunt neque.</p>
+      <h3 id="hourly-heading">Hourly Forecast</h3>
+      <div id="hourly-forecast"></div>
     </div>
-
   </div>
 
-   <!-- Display weekly weather forecast and more details -->
-    <div class="weekly-forecast">
-        <h2>Weekly Forecast</h2>
-        <div class="forecast-card">
-          <div>
-            <p class="day">Mon</p>
-            <img src="assets/sun_clouds.png" alt="">
-            <p>25°C</p>
-          </div>
-          <div>
-            <p>Tue</p>
-            <img src="assets/clouds.jpg" alt="">
-            <p>22°C</p>
-          </div>
-          <div>
-            <p>Wed</p>
-            <img src="assets/clouds.jpg" alt="">
-            <p>22°C</p>
-          </div>
-          <div>
-            <p>Thu</p>
-            <img src="assets/clouds.jpg" alt="">
-            <p>22°C</p>
-          </div>
-          <div>
-            <p>Fri</p>
-            <img src="assets/clouds.jpg" alt="">
-            <p>22°C</p>
-          </div>
-          <div>
-            <p>Sat</p>
-            <img src="assets/clouds.jpg" alt="">
-            <p>22°C</p>
-          </div>
-          <div>
-            <p>Sun</p>
-            <img src="assets/clouds.jpg" alt="">
-            <p>22°C</p>
-          </div>
-         </div>
-       
-
+  <!-- Weekly Forecast -->
+  <div class="weekly-forecast">
+    <h2>Weekly Forecast</h2>
+    <div class="forecast-card">
+      <div>
+        <p>Mon</p>
+        <img src="assets/sun_clouds.png" alt="">
+        <p>25°C</p>
+      </div>
+      <div>
+        <p>Tue</p>
+        <img src="assets/clouds.jpg" alt="">
+        <p>22°C</p>
+      </div>
+      <div>
+        <p>Wed</p>
+        <img src="assets/clouds.jpg" alt="">
+        <p>22°C</p>
+      </div>
+      <div>
+        <p>Thu</p>
+        <img src="assets/clouds.jpg" alt="">
+        <p>22°C</p>
+      </div>
+      <div>
+        <p>Fri</p>
+        <img src="assets/clouds.jpg" alt="">
+        <p>22°C</p>
+      </div>
+      <div>
+        <p>Sat</p>
+        <img src="assets/clouds.jpg" alt="">
+        <p>22°C</p>
+      </div>
+      <div>
+        <p>Sun</p>
+        <img src="assets/clouds.jpg" alt="">
+        <p>22°C</p>
+      </div>
     </div>
-        
+  </div>
 
+  <script>
+    const apiKey = "77a60f51032479c8f4f5798b0d55b95b";
+    const apiURL = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+    const searchBox = document.querySelector(".search input");
+    const searchBtn = document.querySelector(".search button");
+    const weatherIcon = document.querySelector(".weather-icon");
 
- 
+    function displayHourlyForecast(hourlyData) {
+      const next24Hours = hourlyData.slice(0, 8);
+      const hourlyForecastDiv = document.getElementById('hourly-forecast');
+      hourlyForecastDiv.innerHTML = "";
 
-   <script>
-    
-        const apiKey = "77a60f51032479c8f4f5798b0d55b95b";
-        const apiURL = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
-        const searchBox = document.querySelector(".search input");
-        const searchBtn = document.querySelector(".search button");
-        const weatherIcon = document.querySelector(".weather-icon");
-        
+      next24Hours.forEach(item => {
+        const dateTime = new Date(item.dt * 1000);
+        const hour = dateTime.getHours();
+        const temp = Math.round(item.main.temp) + "°C";
+        const iconCode = item.weather[0].icon;
+        const iconUrl = `https://openweathermap.org/img/wn/${iconCode}.png`;
 
-        function displayHourlyForecast(hourlyData) {
-          const next24Hours = hourlyData.slice(0, 8);
-          const hourlyForecastDiv = document.getElementById('hourly-forecast');
-
-          next24Hours.forEach (item => {
-            const dateTime = new Data(item.dt *1000);
-            const hour = dateTime.getHour();
-            const temp = Math.round(data.main.temp) + "°C";
-            const iconCode = item.weather[0].icon;
-            const iconUrl = ``;
-
-            const hourlyItemHtml = `
-                    <div class = " ">
-                      <span>${hour}:00</span>
-                      <img src = "${iconUrl}" alt="Hourly Weather Icon">
-                      <span>${temp}</span>
-                      </div>
-            `;
-            hourlyForecastDiv.innerHTML +=hourlyItemHtml;
-
-
-          })
-        }
-
-        async function checkWeather(city) {
-            const response = await fetch(apiURL + city + `&appid=${apiKey}`);
-            var data = await response.json();
-           
-            if(response.status == 404) {
-                document.querySelector(".error").style.display = "block";
-                document.querySelector(".weather").style.display = "none";
-            }else{
-
-            
-
-
-            document.querySelector(".city").innerHTML = data.name;
-            document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°C";
-            document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
-            document.querySelector(".wind").innerHTML = data.wind.speed + " km/h";
-            
-
-            if(data.weather[0].main == "Clouds") {
-                weatherIcon.src = "assets/clouds.jpg";
-            }else if(data.weather[0].main == "Clear") {
-                weatherIcon.src = "assets/clear.jpg";
-            }else if(data.weather[0].main == "Rain") {
-                weatherIcon.src = "assets/rain.avif";
-            }else if(data.weather[0].main == "Drizzle") {
-                weatherIcon.src = "assets/drizzle.jpg";
-            }else if(data.weather[0].main == "Mist") {
-                weatherIcon.src = "assets/mist.jpg";
-            }
-            document.querySelector(".weather").style.display = "block";
-            document.querySelector(".error").style.display = "none";
-        }
-        console.log(data);
+        const hourlyItemHtml = `
+          <div class="hourly-item">
+            <span>${hour}:00</span>
+            <img src="${iconUrl}" alt="Hourly Weather Icon">
+            <span>${temp}</span>
+          </div>
+        `;
+        hourlyForecastDiv.innerHTML += hourlyItemHtml;
+      });
     }
 
-        searchBtn.addEventListener("click", () =>{
-            checkWeather(searchBox.value);
-        })
+    async function checkWeather(city = "Polokwane") {
+      const response = await fetch(apiURL + city + `&appid=${apiKey}`);
+      var data = await response.json();
 
-         function getCurrentDate(){
-    const d = new Date();
-    const months = ["Jan","Feb","Mar","Apr","May","June","July","Aug","Sep","Oct", "Nov","Dec"];
-    const days = ["Mon", "Tue", "Wed","Thu", "Fri", "Sat", "Sun"];
-    let day = days[d.getDay()-1];
-    let month = months[d.getMonth()];
-    let time = d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
-    document.getElementById("currentDate").innerHTML = day + " "+d.getDate() + "/"+month + "/"+d.getFullYear()+" "+time;
+      if (response.status == 404) {
+        document.querySelector(".error").style.display = "block";
+        document.querySelector(".weather").style.display = "none";
+      } else {
+        document.querySelector(".city").innerHTML = data.name;
+        document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°C";
+        document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
+        document.querySelector(".wind").innerHTML = data.wind.speed + " km/h";
+
+        if (data.weather[0].main == "Clouds") {
+          weatherIcon.src = "assets/clouds.jpg";
+        } else if (data.weather[0].main == "Clear") {
+          weatherIcon.src = "assets/clear.jpg";
+        } else if (data.weather[0].main == "Rain") {
+          weatherIcon.src = "assets/rain.avif";
+        } else if (data.weather[0].main == "Drizzle") {
+          weatherIcon.src = "assets/drizzle.jpg";
+        } else if (data.weather[0].main == "Mist") {
+          weatherIcon.src = "assets/mist.jpg";
+        }
+
+        document.querySelector(".weather").style.display = "block";
+        document.querySelector(".error").style.display = "none";
+      }
+      console.log(data);
     }
+
+    searchBtn.addEventListener("click", () => {
+      checkWeather(searchBox.value);
+    });
+
+    function getCurrentDate() {
+      const d = new Date();
+      const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct", "Nov","Dec"];
+      const days = ["Sun", "Mon", "Tue","Wed","Thu", "Fri", "Sat"];
+      let day = days[d.getDay()];
+      let month = months[d.getMonth()];
+      let time = d.getHours()+":"+d.getMinutes()+":"+d.getSeconds();
+      document.getElementById("currentDate").innerHTML =
+        day + " "+d.getDate() + "/"+month + "/"+d.getFullYear()+" "+time;
+    }
+
     getCurrentDate();
-
-         checkWeather();
-    </script>
-
+    checkWeather();
+  </script>
 </body>
 </html>
